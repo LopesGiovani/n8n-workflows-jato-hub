@@ -1,0 +1,94 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fcdf3968-af01-423c-a750-7f509e7c8004",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ed13c7b3-a990-4c69-8fa0-dfbd159dca89",
+      "name": "Webhook",
+      "webhookId": "fcdf3968-af01-423c-a750-7f509e7c8004"
+    },
+    {
+      "parameters": {
+        "url": "=https://jsonplaceholder.typicode.com/posts/1?name={{$json.body}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f547d412-57a3-4844-b300-c159cb836ce5",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "=Dados do Post {{ $node[\"HTTP Request\"].json[\"id\"] }}",
+        "message": "=Olá {{ $('Webhook').item.json.body.nome }},\n\nBuscamos o post ID {{ $node[\"HTTP Request\"].json[\"id\"] }}\nTítulo: {{ $node[\"HTTP Request\"].json[\"title\"] }}\n\nObrigado!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "b20be915-d18c-4118-a555-8d57e919a499",
+      "name": "Send a message",
+      "webhookId": "6c103940-5e9e-4637-937a-139a4284638c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1An1LiOZuqhawKGz",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6963885d-a8ed-4e77-89ba-0985a9b00e2a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0ebf5eeac07651dd9a49fd08d5d6ac6d8ead4485b4fecc503eaabae8744bcefe"
+  },
+  "id": "fF7TeoLBxt4vg7el",
+  "tags": []
+}
