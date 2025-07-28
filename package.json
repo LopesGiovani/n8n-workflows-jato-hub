@@ -1,0 +1,17 @@
+{
+  "name": "n8n-workflows-jato-hub",
+  "version": "1.0.0",
+  "description": "Repositório de automação para Jato Hub",
+  "scripts": {
+    "install-all": "npm run install-n8n && npm run install-supabase",
+    "install-n8n": "cd workflows/webhook-http-email && npm install",
+    "install-supabase": "cd workflows/supabase-backend && npm install",
+    "dev-supabase": "cd workflows/supabase-backend && npm run dev"
+  },
+  "workspaces": [
+    "workflows/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
